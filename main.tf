@@ -5,6 +5,11 @@ data "google_project" "project" {
   project_id = var.project_id
 }
 
+# Create 2 char random suffix for resource
+resource "random_id" "suffix" {
+  byte_length = 1
+}
+
 # Creates a WIF pool to allow trusted external identities (like GitHub) to access GCP services
 resource "google_iam_workload_identity_pool" "github_pool" {
   workload_identity_pool_id = local.workload_identity_pool_id
