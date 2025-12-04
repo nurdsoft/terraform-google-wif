@@ -1,8 +1,8 @@
 module "wif-setup" {
-  source      = "../../../modules/terraform-gcp-modules-wif"
-  project_id  = "project_id"
+  source      = "../"
+  project_id  = "my-gcp-project"
   environment = "dev"
-  github_repo = "nurdsoft/terraform-gcp-modules-wif"
+  github_repo = "my-org/my-repository"
   wif_attribute_mapping = {
     "google.subject"       = "assertion.actor"
     "attribute.repository" = "assertion.repository"

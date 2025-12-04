@@ -1,9 +1,9 @@
 module "org-level-wif-setup" {
   source      = "../../"
-  project_id  = "project_id"
+  project_id  = "my-gcp-project"
   environment = "dev"
   name        = "example"
-  github_org  = "nurdsoft"
+  github_org  = "my-github-org"
   wif_attribute_mapping = {
     "google.subject"       = "assertion.actor"
     "attribute.repository" = "assertion.repository"
