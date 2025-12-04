@@ -8,9 +8,23 @@ variable "project_id" {
   type        = string
 }
 
+variable "name" {
+  description = "Name used as prefix for Pool, SA name (optional, required if github_org is set)."
+  type        = string
+  default     = ""
+}
+
+variable "github_org" {
+  description = "GitHub org allowed (optional, takes precedence if set)."
+  type        = string
+  default     = ""
+}
+
 # Workload Identity Federation (WIF) related varaible
 variable "github_repo" {
   description = "The repository name in the format organization/repository Used in WIF to restrict access to a specific GitHub repo"
+  type        = string
+  default     = ""
 }
 
 # WIF attributes for GitHub OIDC

@@ -28,9 +28,9 @@ resource "google_iam_workload_identity_pool_provider" "github_provider" {
   oidc {
     issuer_uri = var.oidc_issuer_uri
   }
-  attribute_mapping = var.wif_attribute_mapping
+  attribute_mapping = var.github_org != "" ? merge({"attribute.owner" = "assertion.repository_owner"}, var.wif_attribute_mapping) : var.wif_attribute_mapping
   # Restrict to a specific GitHub repository
-  attribute_condition = "attribute.repository == \"${var.github_repo}\""
+  attribute_condition = local.wif_attribute_condition
 }
 
 # A GCP service account that GitHub Actions will impersonate using OIDC.
@@ -53,5 +53,5 @@ resource "google_service_account_iam_member" "github_oidc_binding" {
   for_each           = toset(var.service_account_iam_member_roles)
   service_account_id = google_service_account.github-deployer.name
   role               = each.value
-  member             = "principalSet://iam.googleapis.com/projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/${google_iam_workload_identity_pool.github_pool.workload_identity_pool_id}/attribute.repository/${var.github_repo}"
+  member             = local.wif_member
 }
